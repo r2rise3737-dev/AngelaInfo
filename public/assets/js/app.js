@@ -1,5 +1,5 @@
-﻿(() => {
-  // ===== Data (точно по ТЗ) =====
+﻿(()=>{
+  // ===== Data =====
   const TAROT = [
     { id:"tarot-basic", title:"Таро с нуля: базовая система",
       badge:"🎬 4 обучающих видео Angela Pearl",
@@ -37,7 +37,6 @@
         "Навык, который даёт вам личный статус: вы умеете видеть глубже, понимать людей и их выбор.",
       ], price:"35 000 ₽" },
   ];
-
   const ASTRO = [
     { id:"astro-basic", title:"Астрология с нуля",
       badge:"🎬 3 обучающих видео Angela Pearl",
@@ -76,94 +75,79 @@
       ], price:"33 000 ₽" },
   ];
 
-  // ===== Render =====
-  let currentTab = "tarot";
-  const cardsEl = document.getElementById("cards");
-  const tabTarot = document.getElementById("tab-tarot");
-  const tabAstro = document.getElementById("tab-astro");
-
-  function esc(s){ return String(s||"").replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c])) }
-  function card(c){
-    return `
-      <article class="card">
-        <h3>${esc(c.title)}</h3>
-        <div class="badge">${esc(c.badge)}</div>
-        <ul>${c.bullets.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>
-        <div class="foot">
-          <div class="price">${esc(c.price)}</div>
-          <a href="/invoice?id=${encodeURIComponent(c.id)}" class="btn btn-soft" onclick="event.preventDefault();alert('DEMO: открылось бы /invoice?id=${esc(c.id)}');">Получить доступ</a>
-        </div>
-      </article>
-    `;
-  }
-  function render(){
-    const list = currentTab==="tarot" ? TAROT : ASTRO;
-    cardsEl.innerHTML = list.map(card).join("");
-  }
-  tabTarot.addEventListener("click", ()=>{currentTab="tarot"; tabTarot.classList.add("is-active"); tabAstro.classList.remove("is-active"); render();});
-  tabAstro.addEventListener("click", ()=>{currentTab="astro"; tabAstro.classList.add("is-active"); tabTarot.classList.remove("is-active"); render();});
+  // ===== Catalog render =====
+  let currentTab="tarot";
+  const cardsEl=document.getElementById("cards");
+  const tabTarot=document.getElementById("tab-tarot");
+  const tabAstro=document.getElementById("tab-astro");
+  const esc=s=>String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+  const card=c=>`
+    <article class="card">
+      <h3>${esc(c.title)}</h3>
+      <div class="badge">${esc(c.badge)}</div>
+      <ul>${c.bullets.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>
+      <div class="foot">
+        <div class="price">${esc(c.price)}</div>
+        <a href="/invoice?id=${encodeURIComponent(c.id)}" class="btn btn-soft-strong"
+           onclick="event.preventDefault();alert('DEMO: открылось бы /invoice?id=${esc(c.id)}');">Получить доступ</a>
+      </div>
+    </article>`;
+  function render(){ const list=currentTab==="tarot"?TAROT:ASTRO; cardsEl.innerHTML=list.map(card).join(""); }
+  tabTarot.addEventListener("click",()=>{currentTab="tarot";tabTarot.classList.add("is-active");tabAstro.classList.remove("is-active");render();});
+  tabAstro.addEventListener("click",()=>{currentTab="astro";tabAstro.classList.add("is-active");tabTarot.classList.remove("is-active");render();});
   render();
 
+  // ===== Support form validation (at least one contact) =====
+  const form=document.getElementById("supportForm");
+  if(form){
+    form.addEventListener("submit",(e)=>{
+      e.preventDefault();
+      const data=new FormData(form);
+      const email=(data.get("email")||"").trim();
+      const phone=(data.get("phone")||"").trim();
+      const tg=(data.get("tg")||"").trim();
+      const msg=(data.get("message")||"").trim();
+      const err=document.getElementById("formError");
+      if(!email && !phone && !tg){ err.textContent="Укажите email, телефон или Telegram — любой один контакт."; return; }
+      if(!msg){ err.textContent="Опишите вопрос."; return; }
+      err.textContent="";
+      alert("DEMO: заявка ушла бы в канал Telegram.\n"+JSON.stringify({email,phone,tg,msg},null,2));
+      form.reset();
+    });
+  }
+
   // ===== Realistic star sky with moon (canvas) =====
-  const cvs = document.getElementById("sky");
-  const ctx = cvs.getContext("2d",{alpha:true});
+  const cvs=document.getElementById("sky"); const ctx=cvs.getContext("2d",{alpha:true});
   function draw(){
-    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio||1));
-    const rect = cvs.getBoundingClientRect();
-    cvs.width = Math.floor(rect.width * dpr);
-    cvs.height = Math.floor(rect.height * dpr);
+    const dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+    const rect=cvs.getBoundingClientRect();
+    cvs.width=Math.floor(rect.width*dpr); cvs.height=Math.floor(rect.height*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
 
-    // Space gradient (deep blue)
-    const g1 = ctx.createRadialGradient(rect.width*0.25, rect.height*0.2, 10, rect.width*0.2, rect.height*0.2, Math.max(rect.width,rect.height)*0.9);
-    g1.addColorStop(0, "#242f4d");
-    g1.addColorStop(1, "#13182b");
-    ctx.fillStyle = g1; ctx.fillRect(0,0,rect.width,rect.height*0.85);
+    // space gradient
+    const g1=ctx.createRadialGradient(rect.width*0.25,rect.height*0.2,10,rect.width*0.2,rect.height*0.2,Math.max(rect.width,rect.height)*0.9);
+    g1.addColorStop(0,"#242f4d"); g1.addColorStop(1,"#13182b");
+    ctx.fillStyle=g1; ctx.fillRect(0,0,rect.width,rect.height*0.85);
 
-    // Stars
-    const count = Math.floor((rect.width*rect.height)/1100);
+    // stars
+    const count=Math.floor((rect.width*rect.height)/1100);
     for(let i=0;i<count;i++){
-      const x = Math.random()*rect.width;
-      const y = Math.random()*rect.height*0.82;
-      const r = Math.random()<0.06? 1.7 : Math.random()<0.15? 1.2 : 0.8;
-      const o = 0.4 + Math.random()*0.6;
-      ctx.globalAlpha = o;
-      ctx.fillStyle = "#fff9f0";
-      ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
-      if (Math.random()<0.08){
-        const gg = ctx.createRadialGradient(x,y,0,x,y,r*4);
-        gg.addColorStop(0,"rgba(255,249,240,0.8)");
-        gg.addColorStop(1,"rgba(255,249,240,0)");
-        ctx.fillStyle = gg; ctx.beginPath(); ctx.arc(x,y,r*4,0,Math.PI*2); ctx.fill();
-      }
+      const x=Math.random()*rect.width, y=Math.random()*rect.height*0.82;
+      const r=Math.random()<0.06?1.7:(Math.random()<0.15?1.2:0.8); const o=0.4+Math.random()*0.6;
+      ctx.globalAlpha=o; ctx.fillStyle="#fff9f0"; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+      if(Math.random()<0.08){ const gg=ctx.createRadialGradient(x,y,0,x,y,r*4); gg.addColorStop(0,"rgba(255,249,240,0.8)"); gg.addColorStop(1,"rgba(255,249,240,0)"); ctx.fillStyle=gg; ctx.beginPath(); ctx.arc(x,y,r*4,0,Math.PI*2); ctx.fill(); }
     }
 
-    // Crescent moon with craters
-    const cx = rect.width*0.82, cy = rect.height*0.22, R = rect.height*0.11;
-    const mg = ctx.createRadialGradient(cx-R*0.3, cy-R*0.3, R*0.2, cx,cy,R);
+    // moon
+    const cx=rect.width*0.82, cy=rect.height*0.22, R=rect.height*0.11;
+    const mg=ctx.createRadialGradient(cx-R*0.3,cy-R*0.3,R*0.2,cx,cy,R);
     mg.addColorStop(0,"#f7f1e6"); mg.addColorStop(1,"#cfc5b2");
-    ctx.save();
-    ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
-    ctx.fillStyle = mg; ctx.fillRect(cx-R*1.2, cy-R*1.2, R*2.4, R*2.4);
-    ctx.globalCompositeOperation = "destination-out";
-    ctx.beginPath(); ctx.arc(cx-R*0.2, cy-R*0.1, R*0.8, 0, Math.PI*2); ctx.fill();
-    ctx.globalCompositeOperation = "source-over";
-    ctx.globalAlpha=0.6;
-    for (let i=0;i<18;i++){
-      const a = Math.random()*Math.PI*2, rr = R*(0.05+Math.random()*0.1);
-      const rx = cx + Math.cos(a)*R*0.5, ry = cy + Math.sin(a)*R*0.5;
-      const cg = ctx.createRadialGradient(rx-rr*0.3, ry-rr*0.3, rr*0.1, rx,ry,rr);
+    ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
+    ctx.fillStyle=mg; ctx.fillRect(cx-R*1.2,cy-R*1.2,R*2.4,R*2.4);
+    ctx.globalCompositeOperation="destination-out"; ctx.beginPath(); ctx.arc(cx-R*0.2,cy-R*0.1,R*0.8,0,Math.PI*2); ctx.fill();
+    ctx.globalCompositeOperation="source-over"; ctx.globalAlpha=0.6;
+    for(let i=0;i<18;i++){ const a=Math.random()*Math.PI*2, rr=R*(0.05+Math.random()*0.1);
+      const rx=cx+Math.cos(a)*R*0.5, ry=cy+Math.sin(a)*R*0.5;
+      const cg=ctx.createRadialGradient(rx-rr*0.3,ry-rr*0.3,rr*0.1,rx,ry,rr);
       cg.addColorStop(0,"#cfc6b6"); cg.addColorStop(1,"rgba(207,198,182,0)");
-      ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(rx,ry,rr,0,Math.PI*2); ctx.fill();
-    }
-    ctx.restore();
-
-    // Fade to beige page
-    const g2 = ctx.createLinearGradient(0, rect.height*0.7, 0, rect.height);
-    g2.addColorStop(0, "rgba(245,239,229,0)");
-    g2.addColorStop(1, "#f5efe5");
-    ctx.globalAlpha = 1; ctx.fillStyle = g2; ctx.fillRect(0,rect.height*0.7,rect.width,rect.height*0.3);
-  }
-  const ro = new ResizeObserver(draw); ro.observe(cvs);
-  draw();
-})();
+      ctx.fillStyle=cg; ctx.beginPat
