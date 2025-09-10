@@ -4,8 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Angela Pearl — Программы обучения</title>
-  <link rel="preload" href="/assets/css/style.css?v=3" as="style">
-  <link rel="stylesheet" href="/assets/css/style.css?v=3">
+
+  <!-- Премиальные шрифты -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="preload" href="/assets/css/style.css?v=4" as="style">
+  <link rel="stylesheet" href="/assets/css/style.css?v=4">
 </head>
 <body>
   <header class="site-header">
@@ -13,12 +19,12 @@
     <nav><a href="#courses" class="btn btn-ghost-strong">Программы обучения</a></nav>
   </header>
 
-  <!-- HERO с фоном-изображением и мягкой подложкой под текст -->
-  <section class="hero hero--image">
+  <!-- HERO с вашим фоном и мягкой подложкой под текст -->
+  <section class="hero hero--image" style="--hero-img:url('/assets/img/hero-bg.png?v=1');">
     <div class="hero__overlay" aria-hidden="true"></div>
     <div class="hero__content">
       <div class="hero__panel">
-        <h1>Курсы Таро и Астрологии от Angela Pearl</h1>
+        <h1 class="serif">Курсы Таро и Астрологии от Angela Pearl</h1>
         <p>Добро пожаловать в пространство знаний и вдохновения. Наши программы помогут вам лучше понять себя и окружающий мир, открыть новые горизонты и при желании сделать первые шаги к профессии. Таро и Астрология здесь — это не только инструмент работы, но и путь к личному развитию, жизненной гармонии и осознанности.</p>
         <div class="hero__cta">
           <a href="#courses" class="btn btn-gold-strong">Программы обучения</a>
@@ -38,7 +44,7 @@
     <section id="courses" class="section">
       <div class="container">
         <div class="section__head">
-          <h2>Программы обучения</h2>
+          <h2 class="serif">Программы обучения</h2>
           <div class="toggle">
             <button id="tab-tarot" class="toggle__btn is-active">Таро</button>
             <button id="tab-astro" class="toggle__btn">Астрология</button>
@@ -52,16 +58,15 @@
     <section id="about" class="section">
       <div class="container about panel">
         <div class="about__text">
-          <h3>Об авторе</h3>
-          <p><strong class="about__name">Angela Pearl</strong></p>
-          <p>Angela Pearl — международный эксперт, чьим прогнозам доверяют миллионы зрителей.</p>
-          <p>Международный консультант и автор методик по Таро и Астрологии. Более 20 лет практики и сотни специалистов по всему миру. Чёткая структура обучения, уважение к этике профессии и фокус на практике — без лишнего.</p>
-          <p>Регулярные разборы реальных запросов (быт, отношения, бизнес) с акцентом на корректную коммуникацию и прикладную психологию. Программы обновляются — добавляются современные расклады, примеры и живые кейсы.</p>
+          <p class="about__name serif">Angela Pearl</p>
+          <p class="serif">Angela Pearl — международный эксперт, чьим прогнозам доверяют миллионы зрителей.</p>
+          <p class="serif">Международный консультант и автор методик по Таро и Астрологии. Более 20 лет практики и сотни специалистов по всему миру. Чёткая структура обучения, уважение к этике профессии и фокус на практике — без лишнего.</p>
+          <p class="serif">Регулярные разборы реальных запросов (быт, отношения, бизнес) с акцентом на корректную коммуникацию и прикладную психологию. Программы обновляются — добавляются современные расклады, примеры и живые кейсы.</p>
 
           <div class="kpis">
-            <div class="kpi"><div class="kpi__num">700+</div><div class="kpi__label">Специалистов</div></div>
-            <div class="kpi"><div class="kpi__num">20+</div><div class="kpi__label">Стран</div></div>
-            <div class="kpi"><div class="kpi__num">20+</div><div class="kpi__label">Лет практики</div></div>
+            <div class="kpi panel"><div class="kpi__num">700+</div><div class="kpi__label">Специалистов</div></div>
+            <div class="kpi panel"><div class="kpi__num">20+</div><div class="kpi__label">Стран</div></div>
+            <div class="kpi panel"><div class="kpi__num">20+</div><div class="kpi__label">Лет практики</div></div>
           </div>
 
           <div class="feature-cards">
@@ -69,21 +74,21 @@
               <div class="feature__icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M7 2v3M17 2v3M3 9h18M4 7h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Zm3 6h4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
-              <h4>Практика</h4>
+              <h4 class="serif">Практика</h4>
               <p>Каждую неделю — разбор живых запросов + обратная связь от наставника.</p>
             </article>
             <article class="feature panel">
               <div class="feature__icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M7 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3 21v-1a5 5 0 0 1 5-5h0M21 21v-1a5 5 0 0 0-5-5h0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
-              <h4>Коммьюнити</h4>
+              <h4 class="serif">Коммьюнити</h4>
               <p>Тёплое сообщество — общие кейсы, нетворкинг и взаимопомощь.</p>
             </article>
             <article class="feature panel">
               <div class="feature__icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M12 2v0A10 10 0 1 0 22 12 10 10 0 0 0 12 2Zm3.5 3.5-3 7-7 3 3-7 7-3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </div>
-              <h4>Методика</h4>
+              <h4 class="serif">Методика</h4>
               <p>Пошагово и без воды: ясные алгоритмы и шаблоны для быстрых результатов.</p>
             </article>
           </div>
@@ -98,7 +103,7 @@
     <!-- FAQ -->
     <section class="section">
       <div class="container faq panel">
-        <h3>FAQ</h3>
+        <h3 class="serif">FAQ</h3>
         <details class="qa" open>
           <summary>Подойдёт ли курс, если я новичок?</summary>
           <p>Да, обучение построено с нуля, разберёмся вместе.</p>
@@ -123,7 +128,7 @@
       <div class="container callout panel">
         <div class="callout__emoji" aria-hidden="true">🎁</div>
         <div class="callout__text">
-          <h4>Бонус: методичка PDF + доступ в закрытый чат</h4>
+          <h4 class="serif">Бонус: методичка PDF + доступ в закрытый чат</h4>
           <p class="muted">После регистрации вы получаете методические материалы и приглашение в приват-коммьюнити.</p>
         </div>
         <a class="btn btn-gold-strong" href="#courses">Записаться сейчас</a>
@@ -133,7 +138,7 @@
     <!-- ПОДДЕРЖКА -->
     <section id="support" class="section">
       <div class="container support panel">
-        <h3>Остались вопросы?</h3>
+        <h3 class="serif">Остались вопросы?</h3>
         <p class="muted">Напишите в поддержку — ответим оперативно.</p>
         <form id="supportForm" novalidate class="form">
           <p class="hint">Укажите хотя бы один контакт: email, телефон или Telegram</p>
@@ -159,6 +164,6 @@
     </div>
   </footer>
 
-  <script src="/assets/js/app.js?v=3" defer></script>
+  <script src="/assets/js/app.js?v=4" defer></script>
 </body>
 </html>
