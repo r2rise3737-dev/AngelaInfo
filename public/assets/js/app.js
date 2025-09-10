@@ -30,7 +30,7 @@
         "Получите инструмент для понимания: «моё это или не моё» — и перестанете идти вслепую.",
       ], price:"26 000 ₽" },
     { id:"master-diagnostics", title:"Таро PRO: личное наставничество с Анжелой Перл",
-      badge:"👑 Личное наставничество Angela Pearl, все видеокурсы",
+      badge:"👑 Личное наставничество Angela Pearl • Все видеокурсы.",
       bullets:[
         "Живая практика и обратная связь лично от Анжелы: вы не останетесь один на один с картами.",
         "Поддержка и разбор именно ваших ситуаций, чтобы вы уверенно чувствовали себя на новом уровне.",
@@ -67,7 +67,7 @@
         "Получите стратегический инструмент: перестанете терять время и деньги, сможете уверенно строить будущее семьи.",
       ], price:"27 000 ₽" },
     { id:"astro-prognostics", title:"Профессиональная астрология с Анжелой Перл",
-      badge:"👑 Личное наставничество Angela Pearl, все видеокурсы",
+      badge:"👑 Личное наставничество Angela Pearl • Все видеокурсы.",
       bullets:[
         "Индивидуальная практика и разбор ваших карт с Анжелой.",
         "Живая обратная связь и сопровождение на пути к экспертному уровню.",
@@ -88,7 +88,7 @@
       <ul>${c.bullets.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>
       <div class="foot">
         <div class="price">${esc(c.price)}</div>
-        <a href="/invoice?id=${encodeURIComponent(c.id)}" class="btn btn-soft-strong"
+        <a href="/invoice?id=${encodeURIComponent(c.id)}" class="btn btn-cta"
            onclick="event.preventDefault();alert('DEMO: открылось бы /invoice?id=${esc(c.id)}');">Получить доступ</a>
       </div>
     </article>`;
@@ -115,49 +115,4 @@
       form.reset();
     });
   }
-
-  // ===== Realistic star sky + moon (canvas) =====
-  const cvs=document.getElementById("sky"); const ctx=cvs.getContext("2d",{alpha:true});
-  function draw(){
-    const dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
-    const rect=cvs.getBoundingClientRect();
-    cvs.width=Math.floor(rect.width*dpr); cvs.height=Math.floor(rect.height*dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-
-    // space
-    const g1=ctx.createRadialGradient(rect.width*0.25,rect.height*0.2,10,rect.width*0.2,rect.height*0.2,Math.max(rect.width,rect.height)*0.9);
-    g1.addColorStop(0,"#242f4d"); g1.addColorStop(1,"#13182b");
-    ctx.fillStyle=g1; ctx.fillRect(0,0,rect.width,rect.height*0.85);
-
-    // stars
-    const count=Math.floor((rect.width*rect.height)/1100);
-    for(let i=0;i<count;i++){
-      const x=Math.random()*rect.width, y=Math.random()*rect.height*0.82;
-      const r=Math.random()<0.06?1.7:(Math.random()<0.15?1.2:0.8); const o=0.4+Math.random()*0.6;
-      ctx.globalAlpha=o; ctx.fillStyle="#fff9f0"; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
-      if(Math.random()<0.08){ const gg=ctx.createRadialGradient(x,y,0,x,y,r*4); gg.addColorStop(0,"rgba(255,249,240,0.8)"); gg.addColorStop(1,"rgba(255,249,240,0)"); ctx.fillStyle=gg; ctx.beginPath(); ctx.arc(x,y,r*4,0,Math.PI*2); ctx.fill(); }
-    }
-
-    // moon
-    const cx=rect.width*0.82, cy=rect.height*0.22, R=rect.height*0.11;
-    const mg=ctx.createRadialGradient(cx-R*0.3,cy-R*0.3,R*0.2,cx,cy,R);
-    mg.addColorStop(0,"#f7f1e6"); mg.addColorStop(1,"#cfc5b2");
-    ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
-    ctx.fillStyle=mg; ctx.fillRect(cx-R*1.2,cy-R*1.2,R*2.4,R*2.4);
-    ctx.globalCompositeOperation="destination-out"; ctx.beginPath(); ctx.arc(cx-R*0.2,cy-R*0.1,R*0.8,0,Math.PI*2); ctx.fill();
-    ctx.globalCompositeOperation="source-over"; ctx.globalAlpha=0.6;
-    for(let i=0;i<18;i++){ const a=Math.random()*Math.PI*2, rr=R*(0.05+Math.random()*0.1);
-      const rx=cx+Math.cos(a)*R*0.5, ry=cy+Math.sin(a)*R*0.5;
-      const cg=ctx.createRadialGradient(rx-rr*0.3,ry-rr*0.3,rr*0.1,rx,ry,rr);
-      cg.addColorStop(0,"#cfc6b6"); cg.addColorStop(1,"rgba(207,198,182,0)");
-      ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(rx,ry,rr,0,Math.PI*2); ctx.fill();
-    }
-    ctx.restore();
-
-    // fade to beige
-    const g2=ctx.createLinearGradient(0,rect.height*0.7,0,rect.height);
-    g2.addColorStop(0,"rgba(245,239,229,0)"); g2.addColorStop(1,"#f5efe5");
-    ctx.globalAlpha=1; ctx.fillStyle=g2; ctx.fillRect(0,rect.height*0.7,rect.width,rect.height*0.3);
-  }
-  const ro=new ResizeObserver(draw); ro.observe(cvs); draw();
 })();
