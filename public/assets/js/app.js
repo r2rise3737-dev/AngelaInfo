@@ -1,5 +1,5 @@
 ﻿(()=>{
-  // ===== Data =====
+  // ----- Данные курсов -----
   const TAROT = [
     { id:"tarot-basic", title:"Таро с нуля: базовая система",
       badge:"🎬 4 обучающих видео Angela Pearl",
@@ -75,7 +75,7 @@
       ], price:"33 000 ₽" },
   ];
 
-  // ===== Catalog render =====
+  // ----- Рендер каталога -----
   let currentTab="tarot";
   const cardsEl=document.getElementById("cards");
   const tabTarot=document.getElementById("tab-tarot");
@@ -97,7 +97,7 @@
   tabAstro.addEventListener("click",()=>{currentTab="astro";tabAstro.classList.add("is-active");tabTarot.classList.remove("is-active");render();});
   render();
 
-  // ===== Support form validation =====
+  // ----- Валидация формы -----
   const form=document.getElementById("supportForm");
   if(form){
     form.addEventListener("submit",(e)=>{
