@@ -1,4 +1,4 @@
-/* v10 — hero cover + fog, glass triggers, richer cards, safe form spacing */
+/* v11 — softer fog edges, hero cover, glass chips */
 :root{
   --hero-img: url('/assets/img/hero-bg.png'); /* ваш файл */
   --bg:#f5efe5; --fg:#2f2415; --muted:#7a6f64;
@@ -37,23 +37,40 @@ body{background:var(--bg);color:var(--fg);font:16px/1.55 "Inter",system-ui,Segoe
 
 /* HERO */
 .hero{position:relative;min-height:580px;overflow:hidden}
-/* теперь изображение на всю ширину шапки */
+/* Фон — на всю ширину, без полос и кропа по композиции */
 .hero--image{background:var(--hero-img) center top/cover no-repeat;background-color:#f5efe5}
-/* тонкая дымка без жёстких краёв */
+/* Мягкая «дымка» на фоне — лёгкая, без перебела */
 .hero__overlay{position:absolute;inset:0;background:
-  linear-gradient(90deg, rgba(245,239,229,.62) 0%, rgba(245,239,229,.22) 42%, rgba(245,239,229,.16) 70%, rgba(245,239,229,.2) 100%),
+  linear-gradient(90deg, rgba(245,239,229,.58) 0%, rgba(245,239,229,.22) 40%, rgba(245,239,229,.16) 70%, rgba(245,239,229,.2) 100%),
   radial-gradient(1200px 80% at 12% 18%, rgba(255,255,255,.24), rgba(255,255,255,0) 70%);
 }
-.hero__inner{position:relative;z-index:1;display:flex;justify-content:flex-start;align-items:flex-start;padding:90px 0 66px}
+.hero__inner{position:relative;z-index:1;display:flex;justify-content:flex-start;align-items:flex-start;padding:92px 0 66px}
 
-/* «облачко» — мягко рассеивается */
-.panel-fog{position:relative;border-radius:26px;background:rgba(255,255,255,.26);backdrop-filter:blur(10px);box-shadow:0 20px 40px rgba(0,0,0,.12)}
-.panel-fog::before{content:"";position:absolute;inset:-48px;background:
-  radial-gradient(560px 320px at 8% 10%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%),
-  radial-gradient(620px 340px at 96% 88%, rgba(255,255,255,.25), rgba(255,255,255,0) 70%),
-  radial-gradient(420px 220px at 50% 50%, rgba(255,255,255,.22), rgba(255,255,255,0) 70%);
-  filter:blur(22px);opacity:.95;pointer-events:none;border-radius:56px}
-.hero__panel{max-width:860px;padding:24px 26px}
+/* ПОДЛОЖКА-«ОБЛАЧКО»: без резких границ, мягкая рассеянность */
+.panel-fog{
+  position:relative;border-radius:28px;
+  background:rgba(255,255,255,.18);             /* прозрачнее */
+  backdrop-filter:blur(12px);
+  box-shadow:0 16px 36px rgba(0,0,0,.10);       /* мягче тень */
+  overflow:visible;
+}
+/* Слой мягкого свечения вокруг, сильно разнесённый наружу и размытый */
+.panel-fog::before{
+  content:"";position:absolute;inset:-72px;border-radius:56px;pointer-events:none;
+  background:
+    radial-gradient(640px 360px at 12% 12%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%),
+    radial-gradient(760px 420px at 88% 86%, rgba(255,255,255,.26), rgba(255,255,255,0) 70%),
+    radial-gradient(520px 260px at 50% 50%, rgba(255,255,255,.18), rgba(255,255,255,0) 70%);
+  filter:blur(26px);opacity:.95;
+}
+/* Доп. мягкий ореол по краям — ещё плавнее градиент */
+.panel-fog::after{
+  content:"";position:absolute;inset:-28px;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(140% 120% at 50% 40%, rgba(255,255,255,.22), rgba(255,255,255,0) 72%);
+  filter:blur(18px);opacity:.9;
+}
+
+.hero__panel{max-width:860px;padding:26px 28px}
 .hero__panel h1{margin:0 0 12px;font:800 clamp(28px,5vw,48px)/1.14 "Playfair Display", Georgia, serif;text-shadow:0 1px 0 rgba(255,255,255,.45)}
 .hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
 .hero__wave{position:absolute;left:0;right:0;bottom:-1px}
@@ -73,10 +90,9 @@ body{background:var(--bg);color:var(--fg);font:16px/1.55 "Inter",system-ui,Segoe
     repeating-linear-gradient(45deg, rgba(214,179,95,.07) 0 2px, rgba(214,179,95,0) 2px 14px);
   opacity:.52;
 }
-/* на фото — без орнамента */
 .no-ornament::after{display:none}
 
-/* стеклянные панели */
+/* Стекло */
 .panel-glass{position:relative;border-radius:22px;background:rgba(255,255,255,.38);backdrop-filter:blur(10px);border:1px solid rgba(234,223,197,.8);box-shadow:var(--shadow)}
 
 /* Sections */
@@ -84,7 +100,7 @@ body{background:var(--bg);color:var(--fg);font:16px/1.55 "Inter",system-ui,Segoe
 .section__head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
 .section__head h2{margin:0;font-size:26px}
 
-/* Toggle + label */
+/* Toggle */
 .toggle-wrap{display:flex;align-items:center;gap:10px}
 .toggle__label{font-size:13px;color:#6b5d50}
 .toggle{display:inline-flex;gap:4px;padding:4px;border:1px solid #eadfcf;border-radius:18px;background:linear-gradient(180deg,#fff,#fff7e6);box-shadow:var(--shadow)}
@@ -102,12 +118,8 @@ body{background:var(--bg);color:var(--fg);font:16px/1.55 "Inter",system-ui,Segoe
   border:1px solid var(--border);border-radius:22px;padding:20px;box-shadow:var(--shadow);
   display:flex;flex-direction:column;min-height:360px
 }
-/* золотистая кайма-ореол */
-.card::before{content:"";position:absolute;inset:-1px;border-radius:22px;pointer-events:none;
-  background:linear-gradient(180deg,rgba(214,179,95,.22),rgba(214,179,95,0));
-  filter:blur(6px);opacity:.55}
+.card::before{content:"";position:absolute;inset:-1px;border-radius:22px;pointer-events:none;background:linear-gradient(180deg,rgba(214,179,95,.22),rgba(214,179,95,0));filter:blur(6px);opacity:.55}
 .card h3{font-size:18px;line-height:1.25;margin:0 0 8px;padding-right:8px}
-/* GLASS-триггер в карточках */
 .card .badge{
   display:inline-block;max-width:100%;
   font-size:12px;border:1px solid rgba(234,223,197,.92);
