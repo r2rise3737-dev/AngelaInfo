@@ -10,8 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="preload" href="/assets/css/style.css?v=8" as="style">
-  <link rel="stylesheet" href="/assets/css/style.css?v=8">
+  <link rel="stylesheet" href="/assets/css/style.css?v=9">
 </head>
 <body>
   <header class="site-header">
@@ -19,11 +18,11 @@
     <nav><a href="#courses" class="btn btn-ghost-strong">Программы обучения</a></nav>
   </header>
 
-  <!-- HERO: фон = ваш файл /assets/img/hero-bg.png -->
+  <!-- HERO: фон = /assets/img/hero-bg.png (ваш файл, показ целиком) -->
   <section class="hero hero--image" style="--hero-img:url('/assets/img/hero-bg.png?v=3');">
     <div class="hero__overlay" aria-hidden="true"></div>
     <div class="container hero__inner">
-      <div class="hero__panel panel-luxe glass">
+      <div class="hero__panel panel-fog">
         <h1 class="serif gold">Курсы Таро и Астрологии от Angela Pearl</h1>
         <p class="lead">
           Добро пожаловать в пространство знаний и вдохновения. Наши программы помогут вам лучше понять себя и окружающий мир, открыть новые горизонты и при желании сделать первые шаги к профессии. Таро и Астрология здесь — это не только инструмент работы, но и путь к личному развитию, жизненной гармонии и осознанности.
@@ -47,9 +46,13 @@
       <div class="container">
         <div class="section__head">
           <h2 class="serif gold-sm">Программы обучения</h2>
-          <div class="toggle">
-            <button id="tab-tarot" class="toggle__btn is-active">Таро</button>
-            <button id="tab-astro" class="toggle__btn">Астрология</button>
+
+          <div class="toggle-wrap">
+            <span class="toggle__label">Переключить&nbsp;направление</span>
+            <div class="toggle">
+              <button id="tab-tarot" class="toggle__btn">Таро</button>
+              <button id="tab-astro" class="toggle__btn is-active">Астрология</button>
+            </div>
           </div>
         </div>
         <div id="cards" class="cards"></div>
@@ -96,7 +99,7 @@
           </div>
         </div>
 
-        <figure class="about__photo panel-luxe">
+        <figure class="about__photo panel-luxe no-ornament">
           <img src="/1land.PNG" alt="Angela Pearl" loading="lazy">
         </figure>
       </div>
@@ -128,9 +131,9 @@
       </div>
     </section>
 
-    <!-- БОНУС -->
+    <!-- БОНУС (glass) -->
     <section class="section">
-      <div class="container callout panel-luxe">
+      <div class="container callout panel-glass">
         <div class="callout__emoji" aria-hidden="true">🎁</div>
         <div class="callout__text">
           <h4 class="serif">Бонус: методичка PDF + доступ в закрытый чат</h4>
@@ -169,7 +172,6 @@
     </div>
   </footer>
 
-  <script src="/assets/js/app.js?v=8" defer></script>
+  <script src="/assets/js/app.js?v=9" defer></script>
 </body>
 </html>
-

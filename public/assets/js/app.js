@@ -76,7 +76,7 @@
   ];
 
   // ----- Рендер каталога -----
-  let currentTab="tarot";
+  let currentTab="astro"; // по умолчанию — Астрология
   const cardsEl=document.getElementById("cards");
   const tabTarot=document.getElementById("tab-tarot");
   const tabAstro=document.getElementById("tab-astro");
