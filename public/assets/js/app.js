@@ -97,7 +97,7 @@
   tabAstro.addEventListener("click",()=>{currentTab="astro";tabAstro.classList.add("is-active");tabTarot.classList.remove("is-active");render();});
   render();
 
-  // ===== Support form validation (at least one contact) =====
+  // ===== Support form validation =====
   const form=document.getElementById("supportForm");
   if(form){
     form.addEventListener("submit",(e)=>{
@@ -111,12 +111,12 @@
       if(!email && !phone && !tg){ err.textContent="Укажите email, телефон или Telegram — любой один контакт."; return; }
       if(!msg){ err.textContent="Опишите вопрос."; return; }
       err.textContent="";
-      alert("DEMO: заявка ушла бы в канал Telegram.\n"+JSON.stringify({email,phone,tg,msg},null,2));
+      alert("DEMO: заявка ушла бы в Telegram.\n"+JSON.stringify({email,phone,tg,msg},null,2));
       form.reset();
     });
   }
 
-  // ===== Realistic star sky with moon (canvas) =====
+  // ===== Realistic star sky + moon (canvas) =====
   const cvs=document.getElementById("sky"); const ctx=cvs.getContext("2d",{alpha:true});
   function draw(){
     const dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
@@ -124,7 +124,7 @@
     cvs.width=Math.floor(rect.width*dpr); cvs.height=Math.floor(rect.height*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
 
-    // space gradient
+    // space
     const g1=ctx.createRadialGradient(rect.width*0.25,rect.height*0.2,10,rect.width*0.2,rect.height*0.2,Math.max(rect.width,rect.height)*0.9);
     g1.addColorStop(0,"#242f4d"); g1.addColorStop(1,"#13182b");
     ctx.fillStyle=g1; ctx.fillRect(0,0,rect.width,rect.height*0.85);
@@ -150,4 +150,14 @@
       const rx=cx+Math.cos(a)*R*0.5, ry=cy+Math.sin(a)*R*0.5;
       const cg=ctx.createRadialGradient(rx-rr*0.3,ry-rr*0.3,rr*0.1,rx,ry,rr);
       cg.addColorStop(0,"#cfc6b6"); cg.addColorStop(1,"rgba(207,198,182,0)");
-      ctx.fillStyle=cg; ctx.beginPat
+      ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(rx,ry,rr,0,Math.PI*2); ctx.fill();
+    }
+    ctx.restore();
+
+    // fade to beige
+    const g2=ctx.createLinearGradient(0,rect.height*0.7,0,rect.height);
+    g2.addColorStop(0,"rgba(245,239,229,0)"); g2.addColorStop(1,"#f5efe5");
+    ctx.globalAlpha=1; ctx.fillStyle=g2; ctx.fillRect(0,rect.height*0.7,rect.width,rect.height*0.3);
+  }
+  const ro=new ResizeObserver(draw); ro.observe(cvs); draw();
+})();
