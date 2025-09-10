@@ -1,4 +1,8 @@
+/* v8 — luxe theme + exact hero background (no zoom) */
 :root{
+  /* Фон по умолчанию — ваш файл. Можно не трогать HTML. */
+  --hero-img: url('/ChatGPT Image 10 сент. 2025 г., 10_06_06.png');
+
   --bg:#f5efe5; --fg:#2f2415; --muted:#7a6f64;
   --hero-fg:#2b2116;
   --gold:#d6b35f; --gold-2:#caa24b; --gold-3:#b4882f;
@@ -39,14 +43,19 @@ body{background:var(--bg);color:var(--fg);font:16px/1.55 "Inter",system-ui,Segoe
 
 /* HERO */
 .hero{position:relative;min-height:580px;overflow:hidden}
-.hero--image{background:var(--hero-img) center/cover no-repeat}
+/* ВАЖНО: показываем ИМЕННО ваш фон целиком, без зума/кропа */
+.hero--image{
+  background:var(--hero-img) left top/contain no-repeat;
+  background-color:#f5efe5; /* поля вокруг изображения */
+}
+/* Мягкая подложка: читабельность текста и сохранение деталей фона */
 .hero__overlay{position:absolute;inset:0;background:
-  linear-gradient(to right, rgba(245,239,229,.85) 0%, rgba(245,239,229,.35) 36%, rgba(245,239,229,.2) 60%, rgba(245,239,229,.25) 100%),
-  radial-gradient(1200px 70% at 15% 20%, rgba(255,255,255,.35), rgba(255,255,255,0) 70%);}
+  linear-gradient(to right, rgba(245,239,229,.68) 0%, rgba(245,239,229,.28) 40%, rgba(245,239,229,.18) 70%, rgba(245,239,229,.22) 100%),
+  radial-gradient(1100px 70% at 15% 20%, rgba(255,255,255,.24), rgba(255,255,255,0) 70%);}
 .hero__inner{position:relative;z-index:1;display:flex;justify-content:flex-start;align-items:flex-start;padding:88px 0 64px}
 .hero__panel{max-width:860px;padding:22px 24px;border-radius:26px}
 .glass{backdrop-filter:blur(4px)}
-.hero__panel h1{margin:0 0 10px;font:800 clamp(28px,5vw,48px)/1.14 "Playfair Display", Georgia, serif}
+.hero__panel h1{margin:0 0 10px;font:800 clamp(28px,5vw,48px)/1.14 "Playfair Display", Georgia, serif;text-shadow:0 1px 0 rgba(255,255,255,.4)}
 .hero__panel p{margin:0}
 .hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
 .hero__wave{position:absolute;left:0;right:0;bottom:-1px}
@@ -62,8 +71,8 @@ body{background:var(--bg);color:var(--fg);font:16px/1.55 "Inter",system-ui,Segoe
 .panel-luxe::after{
   content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
   background:
-    linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0) 30%),
-    radial-gradient(120% 80% at 0% 0%, rgba(214,179,95,.15), transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,.38), rgba(255,255,255,0) 30%),
+    radial-gradient(120% 80% at 0% 0%, rgba(214,179,95,.14), transparent 70%),
     repeating-linear-gradient(45deg, rgba(214,179,95,.07) 0 2px, rgba(214,179,95,0) 2px 14px);
   opacity:.6;
 }
